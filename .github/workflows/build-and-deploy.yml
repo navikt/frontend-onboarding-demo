@@ -18,10 +18,10 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
       - name: "Install dependencies"
         run: "yarn"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: "Build app"
         run: "yarn run build"
-        env:
-            NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: "Login to GitHub Docker Registry"
         uses: "docker/login-action@v1"
         with:
