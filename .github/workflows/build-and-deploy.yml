@@ -10,6 +10,10 @@ jobs:
   "build":
     name: "build"
     runs-on: "ubuntu-latest"
+    permissions:
+        contents: read
+        id-token: write
+        packages: write
     steps:
       - uses: "actions/checkout@v3"
       - uses: "actions/setup-node@v3"
@@ -22,6 +26,12 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: "Build app"
         run: "yarn run build"
+      - name: Upload static files to NAV CDN
+        uses: navikt/frontend/actions/cdn-upload/v1@main
+        with:
+          cdn-team-name: detsombetyrnoe
+          source: ./.next/static
+          destination: /frontend-onboarding-demo/_next
       - name: "Login to GitHub Docker Registry"
         uses: "docker/login-action@v1"
         with:
