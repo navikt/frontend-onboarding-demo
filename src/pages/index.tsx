@@ -1,7 +1,15 @@
 import Head from "next/head";
 import { Heading, Button } from "@navikt/ds-react";
+import { logAmplitudeEvent } from "@navikt/nav-dekoratoren-moduler";
 
 export default function Home() {
+  const myAmplitudeLogger = (event: string, data: Record<string, any>) => {
+    logAmplitudeEvent({
+      origin: "frontend-onboarding-demo", // Navn på kallende applikasjon. Sendes i data-feltet "origin" til Amplitude (påkrevd)
+      eventName: event, // Event-navn (påkrevd)
+      eventData: data, // Event-data objekt (valgfri)
+    }).catch((e) => console.log(`Oh no! ${e}`)); // Funksjonen rejecter ved feil
+  };
   return (
     <>
       <Head>
@@ -14,7 +22,12 @@ export default function Home() {
         <Heading level="1" size="xlarge" spacing>
           Fruktapp
         </Heading>
-        <Button variant="primary">Legg til frukt</Button>
+        <Button
+          variant="primary"
+          onClick={() => myAmplitudeLogger("trykk på knapp", { data: "frukt" })}
+        >
+          Legg til frukt
+        </Button>
       </main>
     </>
   );
