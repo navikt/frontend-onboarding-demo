@@ -8,6 +8,11 @@ metadata:
 spec:
   image: {{ image }}
   port: 3000
+  accessPolicy:
+    outbound:
+      rules:
+        - application: nav-dekoratoren
+          namespace: personbruker
   liveness:
     path: "/api/isAlive"
     initialDelay: 20
