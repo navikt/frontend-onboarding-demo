@@ -8,12 +8,10 @@ metadata:
 spec:
   image: {{ image }} 
   port: 3000
-  idporten:
-    enabled: true
-    sidecar:
+  azure:
+    application:
       enabled: true
-      autoLogin: true
-      level: Level4
+      singlePageApplication: true
   liveness:
     path: "/api/isAlive"
     initialDelay: 20
