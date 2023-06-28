@@ -12,6 +12,9 @@ spec:
     application:
       enabled: true
       singlePageApplication: true
+    sidecar:
+      enabled: true
+      autoLogin: false
   liveness:
     path: "/api/isAlive"
     initialDelay: 20
